@@ -9,3 +9,9 @@ You've been asked to refactor the function `deterministicPartitionKey` in [`dpk.
 You will be graded on the exhaustiveness and quality of your unit tests, the depth of your refactor, and the level of insight into your thought process provided by the written explanation.
 
 ## Your Explanation Here
+
+First of all I decided to move the createHash function to its own function and there I made the typeOf check to avoid stringify an string input and to let the function have a single responsability.
+The main function, there were a lot of redundant `if` conditions and createHash invokes, so I created the candidate variable with a two potential initial values, the event.partitionKey or the TRIVIAL_PARTITION_KEY. About the `if` condition, it will be triggered when:
+- The event.partitionKey is more than 256 length, it would be caught in the `if` condition, otherwise it would be the function's response
+- There is no event.partitionKey was found and an event was provider, the `if` would be activated and the hash created.
+- If no arguments were provided, the function will return '0' (TRIVIAL_PARTITION_KEY)
